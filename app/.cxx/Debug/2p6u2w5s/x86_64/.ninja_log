@@ -1,0 +1,13 @@
+# ninja log v5
+10	122	7520269956632772	CMakeFiles/JniBridge.dir/JniBridge.c.o	944b0b26aaf22cc3
+0	125	7520269956632772	CMakeFiles/nback_cimpl.dir/nback.c.o	c2408a5fd5a3dc83
+125	261	7520269958031791	C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libnback_cimpl.so	2999f63e1de7e9f8
+261	385	7520269959286867	C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libJniBridge.so	af092392c9091b47
+1	11	0	clean	44a27324c348bc75
+0	15	0	clean	44a27324c348bc75
+3	85	7520271773450164	CMakeFiles/nback_cimpl.dir/nback.c.o	c2408a5fd5a3dc83
+14	102	7520271773539864	CMakeFiles/JniBridge.dir/JniBridge.c.o	944b0b26aaf22cc3
+86	299	7520271775459903	C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libnback_cimpl.so	2999f63e1de7e9f8
+300	428	7520271776870906	C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libJniBridge.so	af092392c9091b47
+3	305	7520275396261328	CMakeFiles/JniBridge.dir/JniBridge.c.o	944b0b26aaf22cc3
+314	484	7520275398077911	C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libJniBridge.so	af092392c9091b47

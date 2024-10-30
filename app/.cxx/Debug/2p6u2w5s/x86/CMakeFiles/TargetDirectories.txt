@@ -1,0 +1,4 @@
+C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86/CMakeFiles/nback_cimpl.dir
+C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86/CMakeFiles/JniBridge.dir
+C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86/CMakeFiles/edit_cache.dir
+C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86/CMakeFiles/rebuild_cache.dir
