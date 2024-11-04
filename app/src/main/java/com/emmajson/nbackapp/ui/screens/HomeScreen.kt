@@ -92,11 +92,15 @@ fun HomeScreen(
                     }
                 }
             }
-            Text(
-                modifier = Modifier.padding(16.dp),
-                text = "Start Game".uppercase(),
-                style = MaterialTheme.typography.displaySmall
-            )
+
+            Button(onClick = vm::startGame) {
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = "Start Game".uppercase(),
+                    style = MaterialTheme.typography.displaySmall
+                )
+            }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

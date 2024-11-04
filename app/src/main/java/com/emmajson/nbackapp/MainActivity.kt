@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.emmajson.nbackapp.ui.screens.HomeScreen
+import com.emmajson.nbackapp.ui.screens.NBackScreen
 import com.emmajson.nbackapp.ui.theme.NBack_CImplTheme
 import com.emmajson.nbackapp.ui.viewmodels.GameVM
 
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     )
 
                     // Instantiate the homescreen
-                    HomeScreen(vm = gameViewModel)
+                    NBackScreen(vm = gameViewModel)
                 }
             }
         }

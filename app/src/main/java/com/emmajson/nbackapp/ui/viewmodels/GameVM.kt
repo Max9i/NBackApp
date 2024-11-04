@@ -89,6 +89,7 @@ class GameVM(
                 GameType.Visual -> runVisualGame(events)
             }
             // Todo: update the highscore
+            userPreferencesRepository.saveHighScore(_highscore.value) // CHANGED
         }
     }
 

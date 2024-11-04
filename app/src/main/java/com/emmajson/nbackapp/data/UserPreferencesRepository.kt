@@ -47,6 +47,8 @@ class UserPreferencesRepository (
             preferences[HIGHSCORE] ?: 0
         }
 
+
+    // To save highscore
     suspend fun saveHighScore(score: Int) {
         dataStore.edit { preferences ->
             preferences[HIGHSCORE] = score

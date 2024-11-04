@@ -41,7 +41,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
+			"path" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
 		},
 		{
 			"isExternal" : true,
@@ -307,7 +307,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -541,7 +541,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -692,7 +692,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -786,14 +786,14 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64",
-		"source" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/src/main/cpp"
+		"build" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64",
+		"source" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/src/main/cpp"
 	},
 	"version" : 
 	{

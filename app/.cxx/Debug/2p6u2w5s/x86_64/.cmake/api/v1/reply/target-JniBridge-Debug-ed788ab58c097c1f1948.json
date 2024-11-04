@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libnback_cimpl.so"
+			"path" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libJniBridge.so"
 		}
 	],
 	"backtrace" : 1,
@@ -25,13 +25,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 28,
+				"line" : 29,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 37,
+				"line" : 38,
 				"parent" : 0
 			}
 		]
@@ -48,7 +48,7 @@
 			"defines" : 
 			[
 				{
-					"define" : "nback_cimpl_EXPORTS"
+					"define" : "JniBridge_EXPORTS"
 				}
 			],
 			"language" : "C",
@@ -62,7 +62,14 @@
 			}
 		}
 	],
-	"id" : "nback_cimpl::@6890427a1f51a3e7e1df",
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "nback_cimpl::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "JniBridge::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -73,6 +80,10 @@
 			},
 			{
 				"backtrace" : 2,
+				"fragment" : "C:\\Users\\emmay\\AndroidStudioProjects\\NBackApp\\app\\build\\intermediates\\cxx\\Debug\\2p6u2w5s\\obj\\x86_64\\libnback_cimpl.so",
+				"role" : "libraries"
+			},
+			{
 				"fragment" : "C:\\Users\\emmay\\AppData\\Local\\Android\\Sdk\\ndk\\27.0.12077973\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\x86_64-linux-android\\26\\liblog.so",
 				"role" : "libraries"
 			},
@@ -87,8 +98,8 @@
 			"path" : "C:/Users/emmay/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot"
 		}
 	},
-	"name" : "nback_cimpl",
-	"nameOnDisk" : "libnback_cimpl.so",
+	"name" : "JniBridge",
+	"nameOnDisk" : "libJniBridge.so",
 	"paths" : 
 	{
 		"build" : ".",
@@ -109,7 +120,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "nback.c",
+			"path" : "JniBridge.c",
 			"sourceGroupIndex" : 0
 		}
 	],

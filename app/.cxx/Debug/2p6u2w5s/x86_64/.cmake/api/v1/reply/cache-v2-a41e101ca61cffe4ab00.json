@@ -151,7 +151,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64"
+			"value" : "c:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -671,7 +671,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/src/main/cpp"
+			"value" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/src/main/cpp"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -707,7 +707,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\emmay\\AndroidStudioProjects\\nback_skeletoncode-master\\app\\build\\intermediates\\cxx\\Debug\\2p6u2w5s\\obj\\x86_64"
+			"value" : "C:\\Users\\emmay\\AndroidStudioProjects\\NBackApp\\app\\build\\intermediates\\cxx\\Debug\\2p6u2w5s\\obj\\x86_64"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -979,7 +979,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\emmay\\AndroidStudioProjects\\nback_skeletoncode-master\\app\\build\\intermediates\\cxx\\Debug\\2p6u2w5s\\obj\\x86_64"
+			"value" : "C:\\Users\\emmay\\AndroidStudioProjects\\NBackApp\\app\\build\\intermediates\\cxx\\Debug\\2p6u2w5s\\obj\\x86_64"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1263,7 +1263,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/.cxx/Debug/2p6u2w5s/x86_64"
+			"value" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/.cxx/Debug/2p6u2w5s/x86_64"
 		},
 		{
 			"name" : "nback_cimpl_IS_TOP_LEVEL",
@@ -1287,7 +1287,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/emmay/AndroidStudioProjects/nback_skeletoncode-master/app/src/main/cpp"
+			"value" : "C:/Users/emmay/AndroidStudioProjects/NBackApp/app/src/main/cpp"
 		}
 	],
 	"kind" : "cache",
