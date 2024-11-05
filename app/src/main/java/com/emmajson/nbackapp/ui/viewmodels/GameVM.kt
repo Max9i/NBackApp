@@ -141,7 +141,9 @@ class GameVM(
             // Log the current state to debug
             Log.d("GameVM", "Current Index: $index, Event Value: $value")
 
-            delay(eventInterval)
+            delay(eventInterval/2)
+            _currentIndex.value = -1
+            delay(eventInterval/2)
         }
     }
 
