@@ -39,11 +39,12 @@ interface GameViewModel {
     val score: StateFlow<Int>
     val highscore: StateFlow<Int>
     val nBack: Int
+    val currentIndex: StateFlow<Int>
 
     fun setGameType(gameType: GameType)
     fun startGame()
 
-    fun checkMatch()
+    fun checkMatch(currentIndex: Int)
 }
 
 class GameVM(
@@ -62,7 +63,15 @@ class GameVM(
         get() = _highscore
 
     // nBack is currently hardcoded
-    override val nBack: Int = 2
+    override val nBack: Int = 1
+
+    private val _currentIndex = MutableStateFlow(0)
+    override val currentIndex: StateFlow<Int>
+        get() = _currentIndex.asStateFlow()
+
+
+    private val matchingEvents = mutableSetOf<Int>() // Track unique match positions // TODO : ADDED THIS
+
 
     private var job: Job? = null  // coroutine job for the game event
     private val eventInterval: Long = 2000L  // 2000 ms (2s)
@@ -78,9 +87,14 @@ class GameVM(
     override fun startGame() {
         job?.cancel()  // Cancel any existing game loop
 
+        matchingEvents.clear()
+
         // Get the events from our C-model (returns IntArray, so we need to convert to Array<Int>)
         events = nBackHelper.generateNBackString(10, 9, 30, nBack).toList().toTypedArray()  // Todo Higher Grade: currently the size etc. are hardcoded, make these based on user input
         Log.d("GameVM", "The following sequence was generated: ${events.contentToString()}")
+
+        // Reset score if needed
+        _score.value = 0
 
         job = viewModelScope.launch {
             when (gameState.value.gameType) {
@@ -89,27 +103,46 @@ class GameVM(
                 GameType.Visual -> runVisualGame(events)
             }
             // Todo: update the highscore
-            userPreferencesRepository.saveHighScore(_highscore.value) // CHANGED
+            // After the round ends, check if the current score is a new high score
+            if (_score.value > _highscore.value) {
+                _highscore.value = _score.value
+                userPreferencesRepository.saveHighScore(_highscore.value) // Save the new high score
+                Log.d("GameVM", "New high score saved: ${_highscore.value}")
+            }
         }
     }
 
-    override fun checkMatch() {
-        /**
-         * Todo: This function should check if there is a match when the user presses a match button
-         * Make sure the user can only register a match once for each event.
-         */
+
+
+    override fun checkMatch(currentIndex: Int) {
+        if (currentIndex >= nBack && events[currentIndex] == events[currentIndex - nBack]) {
+            if (matchingEvents.add(currentIndex)) { // Register match only if not already registered
+                _score.value += 1 // Increment score
+                println("Match confirmed at position $currentIndex, score incremented.")
+            } else {
+                println("Match at position $currentIndex was already registered.")
+            }
+        } else {
+            println("No match at position $currentIndex.")
+        }
+        println("Matching events so far: $matchingEvents")
     }
+
+
     private fun runAudioGame() {
         // Todo: Make work for Basic grade
     }
 
-    private suspend fun runVisualGame(events: Array<Int>){
-        // Todo: Replace this code for actual game code
-        for (value in events) {
+    private suspend fun runVisualGame(events: Array<Int>) {
+        for ((index, value) in events.withIndex()) {
             _gameState.value = _gameState.value.copy(eventValue = value)
+            _currentIndex.value = index // Update currentIndex correctly
+
+            // Log the current state to debug
+            Log.d("GameVM", "Current Index: $index, Event Value: $value")
+
             delay(eventInterval)
         }
-
     }
 
     private fun runAudioVisualGame(){
@@ -158,12 +191,16 @@ class FakeVM: GameViewModel{
     override val nBack: Int
         get() = 2
 
+    override val currentIndex: StateFlow<Int>
+        get() = MutableStateFlow(0).asStateFlow()
+
+
     override fun setGameType(gameType: GameType) {
     }
 
     override fun startGame() {
     }
 
-    override fun checkMatch() {
+    override fun checkMatch(currentIndex: Int) {
     }
 }
