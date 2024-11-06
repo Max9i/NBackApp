@@ -103,6 +103,7 @@ fun NBackScreen(vm: GameViewModel) {
                         .fillMaxHeight(),
                     shape = RectangleShape,
                     onClick = {
+                        vm.checkMatchAudio(vm.currentIndex.value)
                         scope.launch {
                             snackBarHostState.showSnackbar(
                                 message = "Hey! you clicked the audio button"
@@ -128,6 +129,11 @@ fun NBackScreen(vm: GameViewModel) {
                     shape = RectangleShape,
                     onClick = {
                         vm.checkMatchPlacement(vm.currentIndex.value)
+                        scope.launch {
+                            snackBarHostState.showSnackbar(
+                                message = "Hey! you clicked the vision button"
+                            )
+                        }
                     }
                 ) {
                     Icon(

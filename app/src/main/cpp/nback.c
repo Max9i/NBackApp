@@ -40,7 +40,6 @@ int getIndexOf(Nback s, int i){
     return s->content[i];
 }
 
-
 void createNBackString(int nBackString[], int size, int combinations, int matchPercentage, int nback){
     // Seed the random number generator
     unsigned int seed = (unsigned int)time(NULL) + (unsigned int)getpid(); // or some other unique value per call
@@ -62,7 +61,6 @@ void createNBackString(int nBackString[], int size, int combinations, int matchP
 
     // Fill in the remaining empty elements in nBackString
     fillInAllEmpty(nBackString, size, combinations, nback);
-
 }
 
 // Function to fill in a match (value and corresponding nBackString elements)
