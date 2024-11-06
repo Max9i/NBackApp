@@ -127,7 +127,7 @@ fun NBackScreen(vm: GameViewModel) {
                         .fillMaxHeight(),
                     shape = RectangleShape,
                     onClick = {
-                        vm.checkMatch(vm.currentIndex.value)
+                        vm.checkMatchPlacement(vm.currentIndex.value)
                     }
                 ) {
                     Icon(

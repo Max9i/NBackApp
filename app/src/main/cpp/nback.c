@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <jni.h>
+#include <unistd.h>
 #include "nback.h"
 
 #define CONTENT_MAX_SIZE 100
@@ -42,7 +43,9 @@ int getIndexOf(Nback s, int i){
 
 void createNBackString(int nBackString[], int size, int combinations, int matchPercentage, int nback){
     // Seed the random number generator
-    srand((unsigned)time(NULL));
+    unsigned int seed = (unsigned int)time(NULL) + (unsigned int)getpid(); // or some other unique value per call
+    rand_r(&seed);
+
 
     // Initialize all elements in nBackString to 0
     for(int i = 0; i<size; i++){
