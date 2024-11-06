@@ -29,8 +29,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import com.emmajson.nbackapp.R
+import com.emmajson.nbackapp.navigation.Screen
 import com.emmajson.nbackapp.ui.viewmodels.FakeVM
 import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
 
@@ -48,9 +51,7 @@ import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
  */
 
 @Composable
-fun HomeScreen(
-    vm: GameViewModel
-) {
+fun HomeScreen(vm: GameViewModel, navController: NavController) {
     val highscore by vm.highscore.collectAsState()  // Highscore is its own StateFlow
     val gameState by vm.gameState.collectAsState()
     val snackBarHostState = remember { SnackbarHostState() }
@@ -93,7 +94,9 @@ fun HomeScreen(
                 }
             }
 
-            Button(onClick = vm::startGame) {
+            Button(onClick = {
+                navController.navigate(Screen.NBackScreen.route)
+            }) {
                 Text(
                     modifier = Modifier.padding(16.dp),
                     text = "Start Game".uppercase(),
@@ -152,6 +155,6 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     // Since I am injecting a VM into my homescreen that depends on Application context, the preview doesn't work.
     Surface(){
-        HomeScreen(FakeVM())
+        HomeScreen(FakeVM(), navController = rememberNavController())
     }
 }

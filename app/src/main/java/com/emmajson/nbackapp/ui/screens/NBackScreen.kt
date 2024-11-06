@@ -31,13 +31,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import com.emmajson.nbackapp.R
 import com.emmajson.nbackapp.ui.viewmodels.FakeVM
 import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
 
 @Composable
-fun NBackScreen(vm: GameViewModel) {
+fun NBackScreen(vm: GameViewModel, navController: NavController) {
     val highscore by vm.highscore.collectAsState()  // Highscore is its own StateFlow
     val gameState by vm.gameState.collectAsState()
     val currentscore by vm.score.collectAsState()
@@ -154,5 +156,5 @@ fun NBackScreen(vm: GameViewModel) {
 fun NBackScreenPreview() {
     // Mock ViewModel or pass a fake ViewModel for preview purposes
     val fakeVm = FakeVM() // You can create a FakeVM class or just pass a mock instance
-    NBackScreen(vm = fakeVm)
+    NBackScreen(vm = fakeVm, rememberNavController())
 }

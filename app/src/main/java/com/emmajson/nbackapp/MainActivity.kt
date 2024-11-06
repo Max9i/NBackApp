@@ -8,8 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.emmajson.nbackapp.ui.screens.HomeScreen
-import com.emmajson.nbackapp.ui.screens.NBackScreen
+import com.emmajson.nbackapp.navigation.Navigation
 import com.emmajson.nbackapp.ui.theme.NBack_CImplTheme
 import com.emmajson.nbackapp.ui.viewmodels.GameVM
 
@@ -41,9 +40,7 @@ class MainActivity : ComponentActivity() {
                     val gameViewModel: GameVM = viewModel(
                         factory = GameVM.Factory
                     )
-
-                    // Instantiate the homescreen
-                    NBackScreen(vm = gameViewModel)
+                    Navigation(vm = gameViewModel)
                 }
             }
         }
