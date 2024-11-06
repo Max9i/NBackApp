@@ -18,11 +18,13 @@ import androidx.core.view.WindowCompat
 
 
 private val DarkColorScheme = darkColorScheme(
-    primary = PauseButtonColor,        // Darker blue for primary elements
+    primary = ButtonColors,        // Darker blue for primary elements
     secondary = BackgroundColor,       // Soft blue background
-    tertiary = BlockColorInactive,     // Light inactive blocks
+
+    primaryContainer = BlockColorActive,        // Active block color
+    onPrimaryContainer = BlockColorInactive,     // Light inactive blocks
+
     background = BackgroundColor,      // Background color
-    surface = BlockColorActive,        // Active block color
     onPrimary = Color.White,           // Text on primary
     onSecondary = TextColor,           // Text on secondary
     onBackground = TextColor,          // Text on background
@@ -31,11 +33,13 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = PauseButtonColor,        // Darker blue for primary elements
+    primary = ButtonColors,        // Darker blue for primary elements
     secondary = BackgroundColor,       // Soft blue background
-    tertiary = BlockColorInactive,     // Light inactive blocks
+
+    primaryContainer = BlockColorInactive,     // Light inactive blocks
+    onPrimaryContainer = BlockColorActive,        // Active block color
+
     background = BackgroundColor,      // Background color
-    surface = BlockColorActive,        // Active block color
     onPrimary = Color.White,           // Text on primary
     onSecondary = TextColor,           // Text on secondary
     onBackground = TextColor,          // Text on background

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,53 +54,63 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
                     textAlign = TextAlign.Center
                 )
 
-                // Start Game Button in the center
-
-
-                // Spacer at the bottom to maintain spacing
-                Spacer(modifier = Modifier.height(32.dp))
             }
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding) ,
-                verticalArrangement = Arrangement.Center, // Space items vertically
+                    .padding(padding)
+                    .padding(20.dp, 100.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(
-                    onClick = { navController.navigate(Screen.NBackScreen.route) },
-                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f) // Adjust width
-                        .height(120.dp)      // Standard button height
-                        .padding(vertical = 16.dp)
-                        .clip(RoundedCornerShape(100))
+                        .padding(0.dp, 30.dp, 0.dp, 30.dp)
+                        .fillMaxWidth()
                 ) {
-                    Text(
-                        text = "Start Game".uppercase(),
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        textAlign = TextAlign.Center
-                    )
+                    GridView(5)
                 }
 
-                Button(
-                    onClick = { navController.navigate(Screen.NBackScreen.route) },
-                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.6f) // Adjust width
-                        .height(75.dp)      // Standard button height
-                        .padding(vertical = 16.dp)
-                        .clip(RoundedCornerShape(100))
+                        .align(Alignment.CenterHorizontally)
                 ) {
-                    Text(
-                        text = "Settings".uppercase(),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        textAlign = TextAlign.Center
-                    )
+                    Button(
+                        onClick = { navController.navigate(Screen.NBackScreen.route) },
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f) // Adjust width
+                            .height(120.dp)      // Standard button height
+                            .padding(vertical = 16.dp)
+                            .clip(RoundedCornerShape(100))
+                    ) {
+                        Text(
+                            text = "Start Game".uppercase(),
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+                Box {
+                    Button(
+                        onClick = { navController.navigate(Screen.NBackScreen.route) },
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onSurface),
+                        modifier = Modifier
+                            .fillMaxWidth(0.4f) // Adjust width
+                            .height(75.dp)      // Standard button height
+                            .padding(vertical = 16.dp)
+                            .clip(RoundedCornerShape(100))
+                            .align(Alignment.Center)
+                    ) {
+                        Text(
+                            text = "Settings".uppercase(),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             }
         }
