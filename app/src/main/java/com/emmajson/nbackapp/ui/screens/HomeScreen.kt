@@ -13,6 +13,7 @@ import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,8 +33,7 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
         val gameState by vm.gameState.collectAsState()
         val lengthValue = gameState.gameLength
         val nBackValue = gameState.gameNBackLvl
-        val gridSize = gameState.gameGridSize
-        val rondDuration = gameState.rondDuration
+        val rondDuration = (gameState.rondDuration.toFloat()/1000)
         val selectedGameMode = gameState.gameType
 
         val highscore by vm.highscore.collectAsState()
@@ -46,7 +46,6 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
             verticalArrangement = Arrangement.Top, // Space items vertically
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // High-Score Display at the top
             Text(
                 text = "High-Score = $highscore",
                 fontSize = 32.sp,
@@ -54,17 +53,32 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.primary)
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 14.dp)
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
+            Box (modifier = Modifier.padding(40.dp)) {
+                Text(
+                    text = "Number of Sequences :    $lengthValue" + '\n' +
+                            "Time per Sequence :    $rondDuration s" + '\n' +
+                            "n = $nBackValue",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.onSurface)
+                        .fillMaxWidth()
+                        .padding(0.dp,10.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(20.dp,0.dp,20.dp,200.dp),
+                .padding(20.dp,0.dp,20.dp,100.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -127,7 +141,7 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(20.dp,0.dp,20.dp,20.dp),
+                .padding(20.dp,100.dp,20.dp,20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {

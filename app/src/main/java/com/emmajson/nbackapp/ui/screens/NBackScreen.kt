@@ -148,7 +148,8 @@ fun NBackScreen(vm: GameViewModel, navController: NavController) {
 
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(20.dp,0.dp,20.dp,60.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.Top
                     ) {

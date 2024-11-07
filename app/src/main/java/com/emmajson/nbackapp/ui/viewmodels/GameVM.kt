@@ -26,7 +26,6 @@ interface GameViewModel {
     val gameState: StateFlow<GameState>
     val score: StateFlow<Int>
     val highscore: StateFlow<Int>
-    val nBack: Int
     val currentIndex: StateFlow<Int>
 
     fun setGameType(gameType: GameType)
@@ -34,6 +33,10 @@ interface GameViewModel {
     fun setNBack(gameNBackLvl: Int)
     fun setGridSize(gameGridSize: Int)
     fun setDuration(millis: Long)
+
+    suspend fun saveCurrentSettings()
+
+
     fun startGame()
     fun stopGame()
 
@@ -44,7 +47,6 @@ interface GameViewModel {
 class GameVM(
     private val context: Context,
     private val userPreferencesRepository: UserPreferencesRepository
-
 ): GameViewModel, ViewModel(), TextToSpeech.OnInitListener {
     private val _gameState = MutableStateFlow(GameState())
     override val gameState: StateFlow<GameState>
@@ -57,9 +59,6 @@ class GameVM(
     private val _highscore = MutableStateFlow(0)
     override val highscore: StateFlow<Int>
         get() = _highscore
-
-    // nBack is currently hardcoded
-    override val nBack: Int = _gameState.value.gameNBackLvl
 
     private val _currentIndex = MutableStateFlow(0)
     override val currentIndex: StateFlow<Int>
@@ -131,8 +130,8 @@ class GameVM(
         _score.value = 0  // Reset score if needed
 
         // Fetch and log events from the helper
-        eventsPlacement = nBackHelper.generateNBackString(_gameState.value.gameLength, (_gameState.value.gameGridSize* _gameState.value.gameGridSize), 25, nBack).toList().toTypedArray()
-        eventsAudio = nBackHelper.generateNBackString(_gameState.value.gameLength, 25, 25, nBack).map { 'A' + it }.toTypedArray()
+        eventsPlacement = nBackHelper.generateNBackString(_gameState.value.gameLength, (_gameState.value.gameGridSize* _gameState.value.gameGridSize), 25, _gameState.value.gameNBackLvl).toList().toTypedArray()
+        eventsAudio = nBackHelper.generateNBackString(_gameState.value.gameLength, 25, 25, _gameState.value.gameNBackLvl).map { 'A' + it }.toTypedArray()
 
         job = viewModelScope.launch {
             when (gameState.value.gameType) {
@@ -155,7 +154,7 @@ class GameVM(
     }
 
     override fun checkMatchPlacement(currentIndex: Int): Boolean {
-        return if (currentIndex >= nBack && eventsPlacement[currentIndex] == eventsPlacement[currentIndex - nBack]) {
+        return if (currentIndex >= _gameState.value.gameNBackLvl && eventsPlacement[currentIndex] == eventsPlacement[currentIndex - _gameState.value.gameNBackLvl]) {
             if (matchingEventsPlacement.add(currentIndex)) { // Register match only if not already registered
                 _score.value += 1 // Increment score
                 println("Match confirmed at position $currentIndex, score incremented.")
@@ -171,7 +170,7 @@ class GameVM(
     }
 
     override fun checkMatchAudio(currentIndex: Int): Boolean {
-        return if (currentIndex >= nBack && eventsAudio[currentIndex] == eventsAudio[currentIndex - nBack]) {
+        return if (currentIndex >= _gameState.value.gameNBackLvl && eventsAudio[currentIndex] == eventsAudio[currentIndex - _gameState.value.gameNBackLvl]) {
             if (matchingEventsAudio.add(currentIndex)) { // Register match only if not already registered
                 _score.value += 1 // Increment score
                 println("Match confirmed at position $currentIndex, score incremented.")
@@ -246,13 +245,29 @@ class GameVM(
     }
 
     init {
-        // Code that runs during creation of the vm
+        // Launch separate coroutines for highscore and settings to avoid blocking
         viewModelScope.launch {
-            userPreferencesRepository.highscore.collect {
-                _highscore.value = it
+            userPreferencesRepository.highscore.collect { score ->
+                _highscore.value = score
+                Log.d("GameVM", "Loaded highscore: $score")
+            }
+        }
+
+        viewModelScope.launch {
+            userPreferencesRepository.settings.collect { loadedSettings ->
+                _gameState.value = loadedSettings
+                Log.d("GameVM", "Loaded settings on app start: $loadedSettings")
             }
         }
     }
+
+    // Save settings to repository
+    override suspend fun saveCurrentSettings() {
+        userPreferencesRepository.saveSettings(_gameState.value)
+        Log.d("GameVM", "Saving current settings: ${_gameState.value}")
+    }
+
+
 }
 
 // Class with the different game types
@@ -280,9 +295,6 @@ class FakeVM: GameViewModel{
         get() = MutableStateFlow(2).asStateFlow()
     override val highscore: StateFlow<Int>
         get() = MutableStateFlow(42).asStateFlow()
-    override val nBack: Int
-        get() = 2
-
     override val currentIndex: StateFlow<Int>
         get() = MutableStateFlow(0).asStateFlow()
 
@@ -297,6 +309,11 @@ class FakeVM: GameViewModel{
     }
     override fun setDuration(millis: Long) {
     }
+
+    override suspend fun saveCurrentSettings() {
+        TODO("Not yet implemented")
+    }
+
 
     override fun startGame() {
     }
