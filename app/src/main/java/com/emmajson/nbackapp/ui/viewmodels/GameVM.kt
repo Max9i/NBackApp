@@ -151,6 +151,7 @@ class GameVM(
                 Log.d("GameVM", "New high score saved: ${_highscore.value}")
             }
         }
+        gameState.value.eventValue = -1
     }
 
 
@@ -252,7 +253,7 @@ enum class GameType{
 data class GameState(
     // You can use this state to push values from the VM to your UI.
     val gameType: GameType = GameType.AudioVisual,  // Type of the game
-    val eventValue: Int = -1,  // The value of the array string
+    var eventValue: Int = -1,  // The value of the array string
     val eventAudioValue: Char = ' '
 )
 
