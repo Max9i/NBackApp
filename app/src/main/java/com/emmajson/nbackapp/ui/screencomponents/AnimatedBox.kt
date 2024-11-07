@@ -1,4 +1,4 @@
-package com.emmajson.nbackapp.ui.screens
+package com.emmajson.nbackapp.ui.screencomponents
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.emmajson.nbackapp.ui.theme.NBack_CImplTheme
 import kotlinx.coroutines.delay

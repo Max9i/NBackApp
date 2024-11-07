@@ -10,7 +10,7 @@ val BackgroundColor = Color(0xFF81D4FA)//Color(0xFFB3DDF2)
 val BlockColorInactive = Color(0xFFD7E8F7)
 
 // Block color for active (highlighted) block
-val BlockColorActive = Color(0xFFE8EBF7)
+val BlockColorActive = Color(0xFFEF7CA2)
 
 // Progress bar color (a yellow/gold shade)
 val ProgressBarColor = Color(0xFFF6C85F)

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.emmajson.nbackapp.ui.screens.HomeScreen
 import com.emmajson.nbackapp.ui.screens.NBackScreen
+import com.emmajson.nbackapp.ui.screens.SettingsScreen
 import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
 
 @Composable
@@ -21,6 +22,11 @@ fun Navigation(vm: GameViewModel) {
         composable(route = Screen.NBackScreen.route) {
             Crossfade(targetState = Screen.NBackScreen) {
                 NBackScreen(vm, navController = navController)
+            }
+        }
+        composable(route = Screen.SettingsScreen.route) {
+            Crossfade(targetState = Screen.SettingsScreen) {
+                SettingsScreen(vm, navController = navController)
             }
         }
     }

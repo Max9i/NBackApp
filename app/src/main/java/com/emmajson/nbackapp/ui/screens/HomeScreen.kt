@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.emmajson.nbackapp.navigation.Screen
+import com.emmajson.nbackapp.ui.screencomponents.GridView
 import com.emmajson.nbackapp.ui.theme.NBack_CImplTheme
 import com.emmajson.nbackapp.ui.viewmodels.FakeVM
 import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
@@ -94,7 +94,7 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
                 }
                 Box {
                     Button(
-                        onClick = { navController.navigate(Screen.NBackScreen.route) },
+                        onClick = { navController.navigate(Screen.SettingsScreen.route) },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onSurface),
                         modifier = Modifier
                             .fillMaxWidth(0.4f) // Adjust width

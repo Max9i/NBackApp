@@ -47,7 +47,10 @@ interface GameViewModel {
     val currentIndex: StateFlow<Int>
 
     fun setGameType(gameType: GameType)
+    fun setGameLength(gameLength: Int)
+    fun setNBack(gameNBackLvl: Int)
     fun startGame()
+    fun stopGame()
 
     fun checkMatchPlacement(currentIndex: Int)
     fun checkMatchAudio(currentIndex: Int)
@@ -71,15 +74,15 @@ class GameVM(
         get() = _highscore
 
     // nBack is currently hardcoded
-    override val nBack: Int = 1
+    override val nBack: Int = _gameState.value.gameNBackLvl
 
     private val _currentIndex = MutableStateFlow(0)
     override val currentIndex: StateFlow<Int>
         get() = _currentIndex.asStateFlow()
 
 
-    private val matchingEventsPlacement = mutableSetOf<Int>() // Track unique match positions // TODO : ADDED THIS
-    private val matchingEventsAudio = mutableSetOf<Int>() // Track unique match positions // TODO : ADDED THIS
+    private val matchingEventsPlacement = mutableSetOf<Int>() // Track unique match positions /
+    private val matchingEventsAudio = mutableSetOf<Int>() // Track unique match positions
 
     private var job: Job? = null  // coroutine job for the game event
     private val eventInterval: Long = 2000L  // 2000 ms (2s)
@@ -118,25 +121,28 @@ class GameVM(
         _gameState.value = _gameState.value.copy(gameType = gameType)
     }
 
+    override fun setGameLength(gameLength: Int) {
+        // update the gametype in the gamestate
+        _gameState.value = _gameState.value.copy(gameLength = gameLength)
+    }
+    override fun setNBack(gameNBackLvl: Int) {
+        // update the gametype in the gamestate
+        _gameState.value = _gameState.value.copy(gameNBackLvl = gameNBackLvl)
+    }
+
     override fun startGame() {
         job?.cancel()  // Cancel any existing game loop
 
         matchingEventsPlacement.clear()
         matchingEventsAudio.clear()
 
-        // Get the events from our C-model (returns IntArray, so we need to convert to Array<Int>)
-        eventsPlacement = nBackHelper.generateNBackString(20, 9, 30, nBack).toList().toTypedArray()  // Todo Higher Grade: currently the size etc. are hardcoded, make these based on user input
-        Log.d("GameVM", "The following sequence was generated: ${eventsPlacement.contentToString()}")
+        // Reset game state and event value for a fresh start
+        _gameState.value = _gameState.value.copy(eventValue = -1, eventAudioValue = ' ')
+        _score.value = 0  // Reset score if needed
 
-        val intArray = nBackHelper.generateNBackString(20, 25, 30, nBack).toList().toTypedArray()
-
-        // Generate character events by converting integers to characters
-        eventsAudio = intArray.map { 'A' + it }.toTypedArray()
-        Log.d("GameVM", "The following character sequence was generated: ${eventsAudio.contentToString()}")
-
-
-        // Reset score if needed
-        _score.value = 0
+        // Fetch and log events from the helper
+        eventsPlacement = nBackHelper.generateNBackString(_gameState.value.gameLength, 9, 30, nBack).toList().toTypedArray()
+        eventsAudio = nBackHelper.generateNBackString(_gameState.value.gameLength, 25, 30, nBack).map { 'A' + it }.toTypedArray()
 
         job = viewModelScope.launch {
             when (gameState.value.gameType) {
@@ -144,15 +150,19 @@ class GameVM(
                 GameType.AudioVisual -> runAudioVisualGame(eventsAudio, eventsPlacement)
                 GameType.Visual -> runVisualGame(eventsPlacement)
             }
-            // After the round ends, check if the current score is a new high score
+
             if (_score.value > _highscore.value) {
                 _highscore.value = _score.value
-                userPreferencesRepository.saveHighScore(_highscore.value) // Save the new high score
+                userPreferencesRepository.saveHighScore(_highscore.value) // Save new high score
                 Log.d("GameVM", "New high score saved: ${_highscore.value}")
             }
         }
     }
 
+    override fun stopGame() {
+        job?.cancel()  // Cancel any existing game loop
+        gameState.value.eventValue = -2
+    }
 
     override fun checkMatchPlacement(currentIndex: Int) {
         if (currentIndex >= nBack && eventsPlacement[currentIndex] == eventsPlacement[currentIndex - nBack]) {
@@ -184,7 +194,6 @@ class GameVM(
 
 
     private suspend fun runAudioGame(eventsAudio: Array<Char>) {
-        // Todo: Make work for Basic grade
         for ((index, value) in eventsAudio.withIndex()) {
             _gameState.value = _gameState.value.copy(eventAudioValue = value)
             _currentIndex.value = index // Update currentIndex correctly
@@ -192,19 +201,28 @@ class GameVM(
             // Log the current state to debug
             Log.d("GameVM", "Current Index: $index, Event Value: $value")
             tts?.speak(value.toString(), TextToSpeech.QUEUE_FLUSH, null, "eventAudioValue_$index")
-
+            if (gameState.value.eventValue == -2) {
+                tts?.shutdown()
+            }
             delay(eventInterval)
         }
     }
 
     private suspend fun runVisualGame(eventsPlacement: Array<Int>) {
-        for ((index, value) in eventsPlacement.withIndex()) {
-            _gameState.value = _gameState.value.copy(eventValue = value)
-            _currentIndex.value = index // Update currentIndex correctly
+        // Ensure the first value is emitted before starting the loop
+        if (eventsPlacement.isNotEmpty()) {
+            _gameState.value = _gameState.value.copy(eventValue = eventsPlacement[0])
+            _currentIndex.value = 0
+            delay(eventInterval) // Allow time for UI to display this first state
+        }
+
+        // Start loop at the second item to avoid re-emitting the first
+        for (index in 1 until eventsPlacement.size) {
+            _gameState.value = _gameState.value.copy(eventValue = eventsPlacement[index])
+            _currentIndex.value = index
 
             // Log the current state to debug
-            Log.d("GameVM", "Current Index: $index, Event Value: $value")
-
+            Log.d("GameVM", "Current Index: $index, Event Value: ${eventsPlacement[index]}")
             delay(eventInterval)
         }
     }
@@ -246,13 +264,15 @@ class GameVM(
 enum class GameType{
     Audio,
     Visual,
-    AudioVisual
+    AudioVisual;
 }
 
 data class GameState(
     // You can use this state to push values from the VM to your UI.
     val gameType: GameType = GameType.AudioVisual,  // Type of the game
-    val eventValue: Int = -1,  // The value of the array string
+    val gameLength: Int = 10,
+    val gameNBackLvl: Int = 1,
+    var eventValue: Int = -1,  // The value of the array string
     val eventAudioValue: Char = ' '
 )
 
@@ -272,8 +292,15 @@ class FakeVM: GameViewModel{
 
     override fun setGameType(gameType: GameType) {
     }
+    override fun setGameLength(gameLength: Int) {
+    }
+    override fun setNBack(gameNBackLvl: Int) {
+    }
 
     override fun startGame() {
+    }
+
+    override fun stopGame() {
     }
 
     override fun checkMatchPlacement(currentIndex: Int) {

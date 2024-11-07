@@ -28,123 +28,153 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import com.emmajson.nbackapp.R
+import com.emmajson.nbackapp.navigation.Screen
+import com.emmajson.nbackapp.ui.screencomponents.GridView
+import com.emmajson.nbackapp.ui.theme.NBack_CImplTheme
 import com.emmajson.nbackapp.ui.viewmodels.FakeVM
 import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
 
 @Composable
 fun NBackScreen(vm: GameViewModel, navController: NavController) {
-    val highscore by vm.highscore.collectAsState()  // Highscore is its own StateFlow
-    val gameState by vm.gameState.collectAsState()
-    val currentscore by vm.score.collectAsState()
-    val snackBarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-    val highlightedIndex = gameState.eventValue - 1 // Get the index to highlight
+    NBack_CImplTheme {
+        val highscore by vm.highscore.collectAsState()  // Highscore is its own StateFlow
+        val gameState by vm.gameState.collectAsState()
+        val currentscore by vm.score.collectAsState()
+        val snackBarHostState = remember { SnackbarHostState() }
+        val scope = rememberCoroutineScope()
+        val highlightedIndex = gameState.eventValue - 1 // Get the index to highlight
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackBarHostState) }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
+        Scaffold(
+            snackbarHost = { SnackbarHost(snackBarHostState) }
         ) {
-            Text(
-                modifier = Modifier.padding(32.dp),
-                text = "High-Score = $highscore",
-                style = MaterialTheme.typography.headlineLarge
-            )
-
-            Row {
-                Button(
-                    shape = RectangleShape,
-                    onClick = vm::startGame
-                ) {
-                    val displayText = if (gameState.eventValue == -1) {
-                        "Start Game"
-                    } else {
-                        "Score: $currentscore"
-                    }
-                    Text(
-                        text = displayText,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-
-            // Wrapping the LazyGrid in another view (Box in this case)
-            Box(
+            Column(
                 modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row (Modifier
+                    .align(Alignment.Start)
+                    .fillMaxWidth()
                     .padding(20.dp)
-                    .fillMaxWidth()
-                    .weight(1f) // This allows the grid to expand and use available space
-            ) {
-                GridView(highlightedIndex = highlightedIndex)
-            }
-
-            // Footer row with two buttons
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Button(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
-                    shape = RectangleShape,
-                    onClick = {
-                        vm.checkMatchAudio(vm.currentIndex.value)
-                        scope.launch {
-                            snackBarHostState.showSnackbar(
-                                message = "Hey! you clicked the audio button"
-                            )
-                        }
-                    }
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.sound_on),
-                        contentDescription = "Sound",
+
+                    Button(
                         modifier = Modifier
-                            .height(48.dp)
-                            .aspectRatio(3f / 2f)
-                    )
+                            .height(75.dp)
+                            .weight(0.2f),
+                        shape = MaterialTheme.shapes.medium,
+                        onClick = {
+                            vm.stopGame()
+                            navController.navigate(Screen.HomeScreen.route)
+                        }
+                    ) {
+                        Text(
+                            text = "Back",
+                            fontSize = 26.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
+                    Spacer(Modifier.width(100.dp))
+
+                    Button(
+                        modifier = Modifier
+                            .height(75.dp)
+                            .weight(0.2f),
+                        shape = MaterialTheme.shapes.medium,
+                        onClick = vm::startGame
+                    ) {
+                        Text(
+                            text = "New Game",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
 
-                Spacer(Modifier.width(4.dp))
-
-                Button(
+                // Wrapping the LazyGrid in another view (Box in this case)
+                Box(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
-                    shape = RectangleShape,
-                    onClick = {
-                        vm.checkMatchPlacement(vm.currentIndex.value)
-                        scope.launch {
-                            snackBarHostState.showSnackbar(
-                                message = "Hey! you clicked the vision button"
-                            )
-                        }
-                    }
+                        .padding(20.dp, 50.dp, 20.dp, 100.dp)
+                        .fillMaxWidth()
+                        .weight(1f) // This allows the grid to expand and use available space
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.visual),
-                        contentDescription = "Visual",
+                    GridView(highlightedIndex = highlightedIndex)
+                }
+
+                // Footer row with two buttons
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Button(
                         modifier = Modifier
-                            .height(48.dp)
-                            .aspectRatio(3f / 2f)
-                    )
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        shape = RectangleShape,
+                        onClick = {
+                            vm.checkMatchAudio(vm.currentIndex.value)
+                            scope.launch {
+                                snackBarHostState.showSnackbar(
+                                    message = "Hey! you clicked the audio button"
+                                )
+                            }
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.sound_on),
+                            contentDescription = "Sound",
+                            modifier = Modifier
+                                .height(48.dp)
+                                .aspectRatio(3f / 2f)
+                        )
+                    }
+
+                    Spacer(Modifier.width(4.dp))
+
+                    Button(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        shape = RectangleShape,
+                        onClick = {
+                            vm.checkMatchPlacement(vm.currentIndex.value)
+                            scope.launch {
+                                snackBarHostState.showSnackbar(
+                                    message = "Hey! you clicked the vision button"
+                                )
+                            }
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.visual),
+                            contentDescription = "Visual",
+                            modifier = Modifier
+                                .height(48.dp)
+                                .aspectRatio(3f / 2f)
+                        )
+                    }
                 }
             }
         }
