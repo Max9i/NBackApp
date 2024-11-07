@@ -2,10 +2,12 @@ package com.emmajson.nbackapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,74 +33,124 @@ import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
 @Composable
 fun SettingsScreen(vm: GameViewModel, navController: NavController) {
     NBack_CImplTheme {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Game Settings")
-                        Button(
-                            modifier = Modifier
-                                .height(50.dp)
-                                .width(150.dp),
-                            shape = MaterialTheme.shapes.medium,
-                            onClick = { navController.navigate(Screen.HomeScreen.route) }
-                        ) {
-                            Text(
-                                text = "Back",
-                                fontSize = 26.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-                )
-            }
-        ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp), // Additional padding for content
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                Modifier
+                    .align(Alignment.Start)
+                    .fillMaxWidth()
+                    .padding(20.dp)
             ) {
-                // Add the Game Mode Toggle Bar
-                Box(modifier = Modifier
-                    .background(MaterialTheme.colorScheme.onPrimary)
+
+                Button(
+                    modifier = Modifier
+                        .height(75.dp)
+                        .weight(0.2f),
+                    shape = MaterialTheme.shapes.medium,
+                    onClick = {
+                        vm.stopGame()
+                        navController.navigate(Screen.HomeScreen.route)
+                    }
                 ) {
-                    GameModeToggleBar(vm)
+                    Text(
+                        text = "Back",
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
                 }
 
-                Box(modifier = Modifier
-                    .background(MaterialTheme.colorScheme.onPrimary)
-                ) {
-                    // Add the Number Input Slider
-                    NumberInputSlider(vm, 9 , "Game Length")
-                }
+                Spacer(Modifier.width(100.dp))
 
-                Box(modifier = Modifier
-                    .background(MaterialTheme.colorScheme.onPrimary)
+                Button(
+                    modifier = Modifier
+                        .height(75.dp)
+                        .weight(0.2f),
+                    shape = MaterialTheme.shapes.medium,
+                    onClick = vm::startGame
                 ) {
-                    // Add the Number Input Slider
-                    NumberInputSlider(vm, 10 , "NBack Level")
+                    Text(
+                        text = "Save",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
                 }
+            }
+        }
 
-                Box(modifier = Modifier
+    }
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 120.dp) // Top padding to offset content
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        val scrollState = rememberScrollState()
+
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState) // Enable vertical scrolling for the entire column
+                .background(MaterialTheme.colorScheme.background)
+                .padding(10.dp), // Optional: Padding around content for spacing
+            verticalArrangement = Arrangement.spacedBy(16.dp) // Space between items
+        ) {
+            // Game Mode Toggle Bar
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.onPrimary)
-                ) {
-                    // Add the Number Input Slider
-                    NumberInputSlider(vm, 2 , "Grid Size")
-                }
-                Box(modifier = Modifier
+            ) {
+                GameModeToggleBar(vm)
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.onPrimary)
-                ) {
-                    // Add the Number Input Slider
-                    NumberInputSlider(vm, 4 , "Round Duration")
-                }
+                    .padding(16.dp) // Optional padding within the Box
+            ) {
+                NumberInputSlider(vm, 9, "Game Length")
+            }
+
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .padding(16.dp) // Optional padding within the Box
+            ) {
+                NumberInputSlider(vm, 10, "NBack Level")
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .padding(16.dp) // Optional padding within the Box
+            ) {
+                NumberInputSlider(vm, 2, "Grid Size")
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .padding(16.dp) // Optional padding within the Box
+            ) {
+                NumberInputSlider(vm, 4, "Round Duration")
             }
         }
     }
 }
+
 
 @Preview
 @Composable
