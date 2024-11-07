@@ -23,3 +23,11 @@
 5	191	7525980006186323	CMakeFiles/nback_cimpl.dir/nback.c.o	a4de6f96a54c4ca4
 191	496	7525980009225310	C:/Users/emmay/AndroidStudioProjects/NBackApp/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libnback_cimpl.so	211bde1c5e6fa760
 497	768	7525980011984390	C:/Users/emmay/AndroidStudioProjects/NBackApp/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libJniBridge.so	7bd7c1d71fc145fb
+40	229	7526815547974331	CMakeFiles/JniBridge.dir/JniBridge.c.o	ce377914a3970cad
+4	236	7526815547959285	CMakeFiles/nback_cimpl.dir/nback.c.o	a4de6f96a54c4ca4
+236	451	7526815550263158	C:/Users/emmay/AndroidStudioProjects/NBackApp/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libnback_cimpl.so	211bde1c5e6fa760
+451	625	7526815551993456	C:/Users/emmay/AndroidStudioProjects/NBackApp/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libJniBridge.so	7bd7c1d71fc145fb
+2	152	7526820403891241	CMakeFiles/nback_cimpl.dir/nback.c.o	a4de6f96a54c4ca4
+18	172	7526820403896272	CMakeFiles/JniBridge.dir/JniBridge.c.o	ce377914a3970cad
+153	377	7526820405980151	C:/Users/emmay/AndroidStudioProjects/NBackApp/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libnback_cimpl.so	211bde1c5e6fa760
+377	555	7526820407642574	C:/Users/emmay/AndroidStudioProjects/NBackApp/app/build/intermediates/cxx/Debug/2p6u2w5s/obj/x86_64/libJniBridge.so	7bd7c1d71fc145fb

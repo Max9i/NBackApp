@@ -11,19 +11,19 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import com.emmajson.nbackapp.ui.theme.NBack_CImplTheme
+import com.emmajson.nbackapp.ui.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun AnimatedVisibilityBox(isVisible: Boolean) {
+fun AnimatedVisibilityBox(isVisible: Boolean, vm: GameViewModel) {
     NBack_CImplTheme {
-        val visibleDurationMillis: Int = 1000
+        val gameState by vm.gameState.collectAsState()
+        val rondDuration = gameState.rondDuration
+        val visibleDurationMillis = rondDuration.toInt()/2
         var isVisible by remember { mutableStateOf(isVisible) }
 
         // Trigger the visibility toggle based on the specified duration
@@ -56,7 +56,6 @@ fun AnimatedVisibilityBox(isVisible: Boolean) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(RoundedCornerShape(16.dp))
                     .background(color)
             )
         }

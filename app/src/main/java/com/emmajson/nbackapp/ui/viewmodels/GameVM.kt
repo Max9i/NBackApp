@@ -22,23 +22,6 @@ import java.util.Locale
 import com.emmajson.nbackapp.data.UserPreferencesRepository
 import kotlinx.coroutines.coroutineScope
 
-/**
- * This is the GameViewModel.
- *
- * It is good practice to first make an interface, which acts as the blueprint
- * for your implementation. With this interface we can create fake versions
- * of the viewmodel, which we can use to test other parts of our app that depend on the VM.
- *
- * Our viewmodel itself has functions to start a game, to specify a gametype,
- * and to check if we are having a match
- *
- * Date: 25-08-2023
- * Version: Version 1.0
- * Author: Yeetivity
- *
- */
-
-
 interface GameViewModel {
     val gameState: StateFlow<GameState>
     val score: StateFlow<Int>
@@ -49,11 +32,13 @@ interface GameViewModel {
     fun setGameType(gameType: GameType)
     fun setGameLength(gameLength: Int)
     fun setNBack(gameNBackLvl: Int)
+    fun setGridSize(gameGridSize: Int)
+    fun setDuration(millis: Long)
     fun startGame()
     fun stopGame()
 
-    fun checkMatchPlacement(currentIndex: Int)
-    fun checkMatchAudio(currentIndex: Int)
+    fun checkMatchPlacement(currentIndex: Int): Boolean
+    fun checkMatchAudio(currentIndex: Int): Boolean
 }
 
 class GameVM(
@@ -85,7 +70,6 @@ class GameVM(
     private val matchingEventsAudio = mutableSetOf<Int>() // Track unique match positions
 
     private var job: Job? = null  // coroutine job for the game event
-    private val eventInterval: Long = 2000L  // 2000 ms (2s)
 
     private val nBackHelper = NBackHelper()  // Helper that generate the event array
     private var eventsPlacement = emptyArray<Int>()  // Array with all events
@@ -129,6 +113,12 @@ class GameVM(
         // update the gametype in the gamestate
         _gameState.value = _gameState.value.copy(gameNBackLvl = gameNBackLvl)
     }
+    override fun setGridSize(gameGridSize: Int) {
+        _gameState.value = _gameState.value.copy(gameGridSize = gameGridSize)
+    }
+    override fun setDuration(millis: Long) {
+        _gameState.value = _gameState.value.copy(rondDuration = millis)
+    }
 
     override fun startGame() {
         job?.cancel()  // Cancel any existing game loop
@@ -141,8 +131,8 @@ class GameVM(
         _score.value = 0  // Reset score if needed
 
         // Fetch and log events from the helper
-        eventsPlacement = nBackHelper.generateNBackString(_gameState.value.gameLength, 9, 30, nBack).toList().toTypedArray()
-        eventsAudio = nBackHelper.generateNBackString(_gameState.value.gameLength, 25, 30, nBack).map { 'A' + it }.toTypedArray()
+        eventsPlacement = nBackHelper.generateNBackString(_gameState.value.gameLength, (_gameState.value.gameGridSize* _gameState.value.gameGridSize), 25, nBack).toList().toTypedArray()
+        eventsAudio = nBackHelper.generateNBackString(_gameState.value.gameLength, 25, 25, nBack).map { 'A' + it }.toTypedArray()
 
         job = viewModelScope.launch {
             when (gameState.value.gameType) {
@@ -164,34 +154,39 @@ class GameVM(
         gameState.value.eventValue = -2
     }
 
-    override fun checkMatchPlacement(currentIndex: Int) {
-        if (currentIndex >= nBack && eventsPlacement[currentIndex] == eventsPlacement[currentIndex - nBack]) {
+    override fun checkMatchPlacement(currentIndex: Int): Boolean {
+        return if (currentIndex >= nBack && eventsPlacement[currentIndex] == eventsPlacement[currentIndex - nBack]) {
             if (matchingEventsPlacement.add(currentIndex)) { // Register match only if not already registered
                 _score.value += 1 // Increment score
                 println("Match confirmed at position $currentIndex, score incremented.")
+                true  // Return true as a match was scored
             } else {
                 println("Match at position $currentIndex was already registered.")
+                false  // Return false as this match was already registered
             }
         } else {
             println("No match at position $currentIndex.")
+            false  // Return false as there was no match
         }
-        println("Matching events so far: $matchingEventsPlacement")
     }
 
-    override fun checkMatchAudio(currentIndex: Int) {
-        if (currentIndex >= nBack && eventsAudio[currentIndex] == eventsAudio[currentIndex - nBack]) {
+    override fun checkMatchAudio(currentIndex: Int): Boolean {
+        return if (currentIndex >= nBack && eventsAudio[currentIndex] == eventsAudio[currentIndex - nBack]) {
             if (matchingEventsAudio.add(currentIndex)) { // Register match only if not already registered
                 _score.value += 1 // Increment score
                 println("Match confirmed at position $currentIndex, score incremented.")
+                true
             } else {
                 println("Match at position $currentIndex was already registered.")
+                false
             }
         } else {
             println("No match at position $currentIndex.")
+            false
+        }.also {
+            println("Matching events so far: $matchingEventsAudio")
         }
-        println("Matching events so far: $matchingEventsAudio")
     }
-
 
     private suspend fun runAudioGame(eventsAudio: Array<Char>) {
         for ((index, value) in eventsAudio.withIndex()) {
@@ -204,7 +199,7 @@ class GameVM(
             if (gameState.value.eventValue == -2) {
                 tts?.shutdown()
             }
-            delay(eventInterval)
+            delay(_gameState.value.rondDuration)
         }
     }
 
@@ -213,7 +208,7 @@ class GameVM(
         if (eventsPlacement.isNotEmpty()) {
             _gameState.value = _gameState.value.copy(eventValue = eventsPlacement[0])
             _currentIndex.value = 0
-            delay(eventInterval) // Allow time for UI to display this first state
+            delay(_gameState.value.rondDuration) // Allow time for UI to display this first state
         }
 
         // Start loop at the second item to avoid re-emitting the first
@@ -223,7 +218,7 @@ class GameVM(
 
             // Log the current state to debug
             Log.d("GameVM", "Current Index: $index, Event Value: ${eventsPlacement[index]}")
-            delay(eventInterval)
+            delay(_gameState.value.rondDuration)
         }
     }
 
@@ -272,6 +267,8 @@ data class GameState(
     val gameType: GameType = GameType.AudioVisual,  // Type of the game
     val gameLength: Int = 10,
     val gameNBackLvl: Int = 1,
+    val gameGridSize: Int = 3,
+    val rondDuration: Long = 2000,
     var eventValue: Int = -1,  // The value of the array string
     val eventAudioValue: Char = ' '
 )
@@ -296,6 +293,10 @@ class FakeVM: GameViewModel{
     }
     override fun setNBack(gameNBackLvl: Int) {
     }
+    override fun setGridSize(gameGridSize: Int) {
+    }
+    override fun setDuration(millis: Long) {
+    }
 
     override fun startGame() {
     }
@@ -303,8 +304,10 @@ class FakeVM: GameViewModel{
     override fun stopGame() {
     }
 
-    override fun checkMatchPlacement(currentIndex: Int) {
+    override fun checkMatchPlacement(currentIndex: Int): Boolean {
+        return false
     }
-    override fun checkMatchAudio(currentIndex: Int) {
+    override fun checkMatchAudio(currentIndex: Int): Boolean {
+        return false
     }
 }

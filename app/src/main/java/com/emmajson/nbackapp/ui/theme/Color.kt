@@ -20,3 +20,24 @@ val TextColor = Color(0x9C1A237E)
 
 // Paused button color (slightly darker blue for contrast)
 val ButtonColors = Color(0xFF1A237E)
+
+
+
+// Dark Background color (soft dark blue-gray)
+val DarkBackgroundColor = Color(0xFF121212) // A very dark gray to give a true dark mode look
+
+// Block color for inactive blocks (darker blue-gray to contrast against the background)
+val DarkBlockColorInactive = Color(0xFF37474F) // Muted blue-gray for subtlety
+
+// Block color for active (highlighted) block (vibrant pinkish-magenta to stand out in dark mode)
+val DarkBlockColorActive = Color(0xFFEF9A9A) // A soft, vibrant pink to keep the highlight visible but not harsh
+
+// Progress bar color (a bright orange-gold shade for contrast)
+val DarkProgressBarColor = Color(0xFFFFA726) // Brighter and warm for visibility on a dark background
+
+// Text color (off-white for readability)
+val DarkTextColor = Color(0xFFECEFF1) // Light, slightly muted white to avoid harsh contrast
+
+// Paused button color (deep navy-blue for contrast and visual comfort)
+val DarkButtonColors = Color(0xFF0D47A1) // Dark blue to keep consistency and avoid too much brightness
+

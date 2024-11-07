@@ -18,18 +18,18 @@ import androidx.core.view.WindowCompat
 
 
 private val DarkColorScheme = darkColorScheme(
-    primary = ButtonColors,        // Darker blue for primary elements
-    secondary = BackgroundColor,       // Soft blue background
+    primary = DarkButtonColors,        // Darker blue for primary elements
+    secondary = DarkBackgroundColor,       // Soft blue background
 
-    primaryContainer = BlockColorActive,        // Active block color
-    onPrimaryContainer = BlockColorInactive,     // Light inactive blocks
+    primaryContainer = DarkBlockColorActive,        // Active block color
+    onPrimaryContainer = DarkBlockColorInactive,     // Light inactive blocks
 
-    background = BackgroundColor,      // Background color
-    onPrimary = Color.White,           // Text on primary
-    onSecondary = TextColor,           // Text on secondary
-    onBackground = TextColor,          // Text on background
-    onSurface = TextColor,             // Text on surface
-    tertiaryContainer = ProgressBarColor
+    background = DarkBackgroundColor,      // Background color
+    onPrimary = Color.Black,           // Text on primary
+    onSecondary = DarkTextColor,           // Text on secondary
+    onBackground = DarkTextColor,          // Text on background
+    onSurface = DarkTextColor,             // Text on surface
+    tertiaryContainer = DarkProgressBarColor
 )
 
 private val LightColorScheme = lightColorScheme(

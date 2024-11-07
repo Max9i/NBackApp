@@ -80,7 +80,20 @@ fun SettingsScreen(vm: GameViewModel, navController: NavController) {
                     .background(MaterialTheme.colorScheme.onPrimary)
                 ) {
                     // Add the Number Input Slider
-                    NumberInputSlider(vm, 9 , "NBack")
+                    NumberInputSlider(vm, 10 , "NBack Level")
+                }
+
+                Box(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                ) {
+                    // Add the Number Input Slider
+                    NumberInputSlider(vm, 2 , "Grid Size")
+                }
+                Box(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                ) {
+                    // Add the Number Input Slider
+                    NumberInputSlider(vm, 4 , "Round Duration")
                 }
             }
         }
