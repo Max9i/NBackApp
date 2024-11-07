@@ -13,6 +13,7 @@ import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,7 +51,7 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
                 text = "High-Score = $highscore",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = Color.White,
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.primary)
                     .padding(horizontal = 16.dp, vertical = 14.dp)
@@ -63,11 +64,11 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
                     text = "Number of Sequences :    $lengthValue" + '\n' +
                             "Time per Sequence :    $rondDuration s" + '\n' +
                             "n = $nBackValue",
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = Color.White,
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.onSurface)
+                        .background(MaterialTheme.colorScheme.onBackground)
                         .fillMaxWidth()
                         .padding(0.dp,10.dp),
                     textAlign = TextAlign.Center
@@ -111,7 +112,7 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
                         text = "Play".uppercase(),
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimary,
+                        color = Color.White,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -119,7 +120,7 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
             Box {
                 Button(
                     onClick = { navController.navigate(Screen.SettingsScreen.route) },
-                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onSurface),
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
                         .fillMaxWidth(0.4f) // Adjust width
                         .height(75.dp)      // Standard button height
@@ -131,7 +132,7 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
                         text = "Settings".uppercase(),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimary,
+                        color = Color.White,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -148,9 +149,9 @@ fun HomeScreen(vm: GameViewModel, navController: NavController) {
             Box {
                 Text(
                     text = "Gametype: $selectedGameMode".uppercase(),
-                    fontSize = 14.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = Color.White,
                     textAlign = TextAlign.Center
                 )
             }

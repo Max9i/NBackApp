@@ -28,7 +28,7 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Color.Black,           // Text on primary
     onSecondary = DarkTextColor,           // Text on secondary
     onBackground = DarkTextColor,          // Text on background
-    onSurface = DarkTextColor,             // Text on surface
+    onSurface = LightTextColor,             // Text on surface
     tertiaryContainer = DarkProgressBarColor
 )
 
@@ -43,7 +43,7 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = Color.White,           // Text on primary
     onSecondary = TextColor,           // Text on secondary
     onBackground = TextColor,          // Text on background
-    onSurface = TextColor,              // Text on surface
+    onSurface = DarkerTextColor,              // Text on surface
     tertiaryContainer = ProgressBarColor
 
 )

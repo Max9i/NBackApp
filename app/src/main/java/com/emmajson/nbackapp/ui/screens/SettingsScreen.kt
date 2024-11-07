@@ -14,6 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,7 +71,8 @@ fun SettingsScreen(vm: GameViewModel, navController: NavController) {
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .fillMaxWidth(),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = Color.White
                     )
                 }
 
@@ -94,7 +96,9 @@ fun SettingsScreen(vm: GameViewModel, navController: NavController) {
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .fillMaxWidth(),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = Color.White
+
                     )
                 }
             }

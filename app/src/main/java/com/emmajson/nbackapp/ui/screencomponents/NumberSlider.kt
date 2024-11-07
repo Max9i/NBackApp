@@ -29,14 +29,16 @@ fun NumberInputSlider(vm: GameViewModel, steps: Int, text: String ) {
             Text(
                 text = text,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             if (text == "Game Length") {
                 Text(
                     text = lengthValue.toString(),
                     style = MaterialTheme.typography.displaySmall,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Slider(
                     value = lengthValue.toFloat(),
@@ -52,7 +54,9 @@ fun NumberInputSlider(vm: GameViewModel, steps: Int, text: String ) {
                 Text(
                     text = nBackValue.toString(),
                     style = MaterialTheme.typography.displaySmall,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurface
+
                 )
 
                 Slider(
@@ -69,7 +73,8 @@ fun NumberInputSlider(vm: GameViewModel, steps: Int, text: String ) {
                 Text(
                     text = gridSize.toString(),
                     style = MaterialTheme.typography.displaySmall,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Slider(
@@ -86,7 +91,8 @@ fun NumberInputSlider(vm: GameViewModel, steps: Int, text: String ) {
                 Text(
                     text = rondDuration.toString(),
                     style = MaterialTheme.typography.displaySmall,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Slider(
