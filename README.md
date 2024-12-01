@@ -28,4 +28,4 @@ This README includes screenshots and a recording to demonstrate the functionalit
 
 ---
 
-Code skeleton from yeetivity[(https://github.com/yeetivity/nback_skeletoncode)]
+Code skeleton from [yeetivity](https://github.com/yeetivity/nback_skeletoncode)
